@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+
+*{
+  padding: 0;
+  margin: 0;
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+button{
+  width: 160px;
+  padding: 0.8em;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  color: white;
+  background-color: green;
+  cursor: pointer;
+}
+
+.media-wrapper{
+  margin-top: 2em;
+  max-width: 50vw;
+  max-height: 50vh;
+}
+
+img,video{
+  object-fit: cover;
+  max-height: 50vh;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+}
