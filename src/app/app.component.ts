@@ -15,22 +15,23 @@ export class AppComponent {
   mediaUrl: string | null = null;
   mediaType = '';
 
-
-  async onFileSelected(event: any) {
-    const file = event.target.files[0]; // Get the file
-
+  getMediaType(file: File) {
     if (!file) {
-      return;
+      return '';
     }
 
-    this.mediaType = this.getMediaType(file);
+    const supportedVideoFormatRegex = /(\.3gp|\.mp4)$/i;
+    const supportedImageFormatRegex = /(\.png|\.jpg|\.jpeg)$/i;
 
-    if (!this.mediaType) {
-      alert('Invalid media file added');
-      return;
+    if (supportedImageFormatRegex.exec(file.name)) {
+      return 'image';
     }
 
-    this.mediaUrl = await this.getMediaUrl(file);
+    if (supportedVideoFormatRegex.exec(file.name)) {
+      return 'video';
+    }
+
+    return '';
   }
 
   async getMediaUrl(file: File): Promise<string | null> {
@@ -52,22 +53,21 @@ export class AppComponent {
     })
   }
 
-  getMediaType(file: File) {
+  async onFileSelected(event: any) {
+    const file = event.target.files[0]; // Get the file
+
     if (!file) {
-      return '';
+      return;
     }
 
-    const supportedVideoFormatRegex = /(\.3gp|\.mp4)$/i;
-    const supportedImageFormatRegex = /(\.png|\.jpg|\.jpeg)$/i;
+    this.mediaType = this.getMediaType(file);
 
-    if (supportedImageFormatRegex.exec(file.name)) {
-      return 'image';
+    if (!this.mediaType) {
+      alert('Invalid media file added');
+      return;
     }
 
-    if (supportedVideoFormatRegex.exec(file.name)) {
-      return 'video';
-    }
-
-    return '';
+    this.mediaUrl = await this.getMediaUrl(file);
   }
+
 }
