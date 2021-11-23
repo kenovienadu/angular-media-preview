@@ -44,9 +44,8 @@ export class AppComponent {
         const blob = new Blob([new Uint8Array(buffer)]); // We have to convert the buffer to a blob:
 
         const url = window.URL.createObjectURL(blob); // The blob gives us a URL
-        const sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url) as string;
 
-        resolve(sanitizedUrl);
+        resolve(url);
       }
 
       fileReader.readAsArrayBuffer(file);
@@ -67,7 +66,8 @@ export class AppComponent {
       return;
     }
 
-    this.mediaUrl = await this.getMediaUrl(file);
+    const url = await this.getMediaUrl(file)
+    this.mediaUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url as string) as string;
   }
 
 }
